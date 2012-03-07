@@ -31,6 +31,7 @@ module Twitter
       # since this is all <tt>Twitter4R</tt> needs.
       def unmarshal(raw)
         input = JSON.parse(raw) if raw.is_a?(String)
+
         def unmarshal_model(hash)
           self.new(hash)
         end
@@ -334,12 +335,24 @@ module Twitter
     end
   end # User
   
+
+  class Url
+      include ModelMixin
+      @@ATTRIBUTES = [:url, :display_url, :expanded_url, :indices ]
+      attr_accessor(*@@ATTRIBUTES)
+
+      class << self
+        # Used as factory method callback
+        def attributes; @@ATTRIBUTES; end
+      end
+  end # Url
+
   # Represents a status posted to <tt>Twitter</tt> by a <tt>Twitter</tt> user.
   class Status
     include ModelMixin
     @@ATTRIBUTES = [:id, :id_str, :text, :source, :truncated, :created_at, :user, 
                     :from_user, :to_user, :favorited, :in_reply_to_status_id, 
-                    :in_reply_to_user_id, :in_reply_to_screen_name, :geo]
+                    :in_reply_to_user_id, :in_reply_to_screen_name, :geo, :entities, :urls]
     attr_accessor(*@@ATTRIBUTES)
 
     class << self
@@ -398,6 +411,9 @@ module Twitter
       # Constructor callback
       def init
         @user = User.new(@user) if @user.is_a?(Hash)
+        puts @entities
+        @urls = @entities["urls"].collect {|e| Url.new(e)} if @entities.is_a?(Hash)
+
         @created_at = Time.parse(@created_at) if @created_at.is_a?(String)
       end    
   end # Status
