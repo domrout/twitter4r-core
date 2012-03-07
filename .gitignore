@@ -10,5 +10,4 @@ twitter*.gem
 coverage.data
 coverage
 gemfile.lock
-*.gemspec
 *.DS_Store
