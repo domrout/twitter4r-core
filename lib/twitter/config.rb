@@ -1,15 +1,15 @@
-# config.rb contains classes, methods and extends existing Twitter4R classes 
+# config.rb contains classes, methods and extends existing Twitter4R classes
 # to provide easy configuration facilities.
 
 module Twitter
   # Represents global configuration for Twitter::Client.
   # Can override the following configuration options:
   # * <tt>protocol</tt> - <tt>:http</tt>, <tt>:https</tt> or <tt>:ssl</tt> supported.  <tt>:ssl</tt> is an alias for <tt>:https</tt>.  Defaults to <tt>:ssl</tt>
-  # * <tt>host</tt> - hostname to connect to for the Twitter service.  Defaults to <tt>'twitter.com'</tt>.
+  # * <tt>host</tt> - hostname to connect to for the Twitter service.  Defaults to <tt>'api.twitter.com'</tt>.
   # * <tt>port</tt> - port to connect to for the Twitter service.  Defaults to <tt>443</tt>.
-  # * <tt>path_prefix</tt> - path to prefix URIs of REST API calls.  Defaults to <tt>""</tt>.
+  # * <tt>path_prefix</tt> - path to prefix URIs of REST API calls.  Defaults to <tt>"1"</tt>.
   # * <tt>search_protocol</tt> - <tt>:http</tt>, <tt>:https</tt> or <tt>:ssl</tt> supported.  <tt>:ssl</tt> is an alias for <tt>:https</tt>.  Defaults to <tt>:ssl</tt>
-  # * <tt>search_host</tt> - hostname to connect to for the Twitter Search service.  Defaults to <tt>'twitter.com'</tt>.
+  # * <tt>search_host</tt> - hostname to connect to for the Twitter Search service.  Defaults to <tt>'search.twitter.com'</tt>.
   # * <tt>search_port</tt> - port to connect to for the Twitter Search service.  Defaults to <tt>443</tt>.
   # * <tt>search_path_prefix</tt> - path to prefix URIs of Search API calls.  Defaults to <tt>""</tt>.
   # * <tt>proxy_protocol</tt> - proxy protocol to use.  Defaults to http.
@@ -17,6 +17,10 @@ module Twitter
   # * <tt>proxy_port</tt> - proxy host to use.  Defaults to 8080.
   # * <tt>proxy_user</tt> - proxy username to use.  Defaults to nil.
   # * <tt>proxy_pass</tt> - proxy password to use.  Defaults to nil.
+  # * <tt>media_protocol</tt> - <tt>:http</tt>, <tt>:https</tt> or <tt>:ssl</tt> supported.  <tt>:ssl</tt> is an alias for <tt>:https</tt>.  Defaults to <tt>:ssl</tt>
+  # * <tt>media_host</tt> - hostname to connect to for the Twitter Upload service.  Defaults to <tt>'twitter.com'</tt>.
+  # * <tt>media_port</tt> - port to connect to for the Twitter Upload service.  Defaults to <tt>443</tt>.
+  # * <tt>media_path_prefix</tt> - path to prefix URIs of Upload API calls.  Defaults to <tt>""</tt>.
   # * <tt>user_agent</tt> - user agent string to use for each request of the HTTP header.
   # * <tt>application_name</tt> - name of your client application.  Defaults to 'Twitter4R'.
   # * <tt>application_version</tt> - version of your client application.  Defaults to current <tt>Twitter::Version.to_version</tt>.
@@ -31,19 +35,23 @@ module Twitter
   class Config
     include ClassUtilMixin
     @@ATTRIBUTES = [
-      :protocol, 
-      :host, 
-      :port, 
+      :protocol,
+      :host,
+      :port,
       :path_prefix,
       :search_protocol,
       :search_host,
       :search_port,
       :search_path_prefix,
       :proxy_protocol,
-      :proxy_host, 
-      :proxy_port, 
-      :proxy_user, 
-      :proxy_pass, 
+      :proxy_host,
+      :proxy_port,
+      :proxy_user,
+      :proxy_pass,
+      :media_protocol,
+      :media_host,
+      :media_port,
+      :media_path_prefix,
       :user_agent,
       :application_name,
       :application_version,
@@ -59,8 +67,8 @@ module Twitter
     ]
 
     attr_accessor(*@@ATTRIBUTES)
-    
-    # Override of Object#eql? to ensure RSpec specifications run 
+
+    # Override of Object#eql? to ensure RSpec specifications run
     # correctly. Also done to follow Ruby best practices.
     def eql?(other)
       return true if self == other
@@ -72,17 +80,28 @@ module Twitter
   end
 
   class Client
+<<<<<<< HEAD
     @@defaults = { :host => 'api.twitter.com', 
                    :port => 443, 
                    :protocol => :ssl,
                    :path_prefix => "/1",
+=======
+    @@defaults = { :host => 'api.twitter.com',
+                   :port => 443,
+                   :protocol => :ssl,
+                   :path_prefix => "1",
+>>>>>>> f033deed12428df6b30df0254c5da0ee350ad69c
                    :search_host => 'search.twitter.com',
-                   :search_port => 80,
-                   :search_protocol => :http,
+                   :search_port => 443,
+                   :search_protocol => :ssl,
                    :search_path_prefix => "",
                    :proxy_protocol => "http",
                    :proxy_host => nil,
                    :proxy_port => 8080,
+                   :media_host => 'upload.twitter.com',
+                   :media_port => 443,
+                   :media_protocol => :ssl,
+                   :media_path_prefix => "1",
                    :user_agent => "default",
                    :application_name => 'Twitter4R',
                    :application_version => Twitter::Version.to_version,
@@ -108,6 +127,6 @@ module Twitter
         raise ArgumentError, "Block must be provided to configure" unless block_given?
         yield config
       end # configure
-    end # class << self    
+    end # class << self
   end # Client class
 end # Twitter module

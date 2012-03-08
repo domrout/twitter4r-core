@@ -341,7 +341,11 @@ module Twitter
   # https://dev.twitter.com/docs/tweet-entities
   #
   # Must enable include_entities as an option in the request to receive these.
+<<<<<<< HEAD
   class Entities 
+=======
+  class Entities
+>>>>>>> f033deed12428df6b30df0254c5da0ee350ad69c
     include ModelMixin
     @@ATTRIBUTES = [:urls, :media, :user_mentions, :hashtags ]
     attr_accessor(*@@ATTRIBUTES)
@@ -359,8 +363,13 @@ module Twitter
         @user_mentions = @user_mentions.collect {|e| e.is_a?(Hash) ? UserMention.new(e) : e } if @user_mentions.is_a?(Array)
         @hashtags = @hashtags.collect {|e| e.is_a?(Hash) ? HashTag.new(e) : e } if @hashtags.is_a?(Array)
 
+<<<<<<< HEAD
       end    
   end 
+=======
+      end
+  end
+>>>>>>> f033deed12428df6b30df0254c5da0ee350ad69c
 
   # Represents a URL entity.
   #
@@ -411,7 +420,11 @@ module Twitter
         def attributes; @@ATTRIBUTES; end
       end
 
+<<<<<<< HEAD
       def to_s  
+=======
+      def to_s
+>>>>>>> f033deed12428df6b30df0254c5da0ee350ad69c
         "@#{@screen_name}"
       end
   end # UserMention
