@@ -80,17 +80,11 @@ module Twitter
   end
 
   class Client
-<<<<<<< HEAD
-    @@defaults = { :host => 'api.twitter.com', 
-                   :port => 443, 
-                   :protocol => :ssl,
-                   :path_prefix => "/1",
-=======
+
     @@defaults = { :host => 'api.twitter.com',
                    :port => 443,
                    :protocol => :ssl,
                    :path_prefix => "1",
->>>>>>> f033deed12428df6b30df0254c5da0ee350ad69c
                    :search_host => 'search.twitter.com',
                    :search_port => 443,
                    :search_protocol => :ssl,
